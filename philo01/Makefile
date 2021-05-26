@@ -32,4 +32,7 @@ re:			fclean all
 test:		re
 			@./$(NAME) 4 200 200 200
 
-.PHONY:		all clean fclean re test
+err:		re
+			@./$(NAME) 4 200 200 200 -5
+
+.PHONY:		all clean fclean re test err

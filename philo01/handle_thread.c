@@ -6,9 +6,9 @@ static void
 	pthread_mutex_t	mutex;
 
 	info = (t_info *)info;
-	pthread_mutex_lock(&mutex);
+	//pthread_mutex_lock(&mutex);
 	printf("eat\n");
-	pthread_mutex_unlock(&mutex);
+	//pthread_mutex_unlock(&mutex);
 	printf("sleep\n");
 	printf("think\n");
 	return (0);
@@ -44,6 +44,6 @@ int
 		printf("must eat > 0\n");
         //routine_monitor...
 	}
-	printf("must eat == 0 or -1\n");
+	printf("must eat == 0 \n");
 	return (0);
 }

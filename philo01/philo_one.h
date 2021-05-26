@@ -42,7 +42,7 @@ typedef struct  s_info
 # define UNDECIDED_EAT_NUM 5
 # define DECICED_EAT_NUM 6
 
-# define UNDECIDED -1
+# define UNDECIDED 0
 
 //functions
 void
@@ -58,6 +58,9 @@ int
                     int arg_num);
 
 int
-	handle_thread(t_info *info);                    
+	handle_thread(t_info *info);
+
+int
+	is_invalid_rule(t_rule *rule);          
 
 #endif
