@@ -47,7 +47,6 @@ int 	main()
 	detach_res = pthread_detach(tid);
 	printf("detaced result: %d\n", detach_res);
 
-
 	// [ 3. (join)wait for thread ]
 	// args:	1. thread(ID)
 	//			2.thread function's return value
