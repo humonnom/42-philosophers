@@ -1,5 +1,24 @@
 #include "philo_one.h"
 
+void
+	*philo_routine(void *arg)
+{
+	int 	time;
+	t_philo *philo;
+	philo = (t_philo *)arg;
+	//printf("[%d]\n", philo->philo_id);
+	time = 3;
+	// get((philo_id) % philo->, (philo_id + 1) )
+	// mutex on
+	pthread_mutex_lock(&philo->mutex);
+	eat(time);
+	// mutex off
+	pthread_mutex_unlock(&philo->mutex);
+	// throwaway(philo_id, philo_id + 1)
+
+	return (NULL);
+}
+
 static void
 	*save_tid_to_rule(void *info)
 {
@@ -15,7 +34,7 @@ static void
 }
 
 static int
-	create_thread(t_info *info ,int p_num)
+	gen_thread(t_info *info ,int p_num)
 {
 	pthread_t		tid;
 	int				ret;
@@ -37,13 +56,41 @@ static int
 int
 	handle_thread(t_info *info)
 {
+	pthread_t	tid;
+	int			ret;
+	int			status;
+
 	//have to confirm if "number of eat" is not defined, how to handle it.
 	// my case: in case not defined, "number of eat" is -1.
-	if (info->rule.number_of_eat > 0)
+
+	// Check if all philos have eaten as much as they shoul...
+	// if (info->rule.number_of_eat > 0)
+	// {
+	// 	printf("must eat > 0\n");
+    //     //routine_monitor...
+	// }
+	void		*arg;
+	int			i;
+
+	ret = 0;
+	i = -1;
+	while (++i < info->rule.number_of_philos)
 	{
-		printf("must eat > 0\n");
-        //routine_monitor...
+		arg = &(info->philo[i]);
+		ret = pthread_create(&info->philo[i].thread, NULL, &philo_routine, arg);
+		if (ret)
+		{
+			info->errcode = ret;
+			return (1);
+		}
+		//usleep(100);
+		ret = pthread_join(info->philo[i].thread, (void *)&status);
+		printf("%d join result: %d\n", i, ret);
 	}
-	printf("must eat == 0 \n");
+	// i = -1;
+	// while (++i < info->rule.number_of_philos)
+	// {
+
+	// }
 	return (0);
 }

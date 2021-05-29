@@ -21,6 +21,8 @@ void	print_index_loop(char *str, int max)
 void	*thread_routine(void *arg)
 {
 	print_index_loop("thread", 5);
+	while(1)
+		;
 	return (NULL);
 }
 
@@ -45,12 +47,13 @@ int 	main()
 	// [ 2. detach thread from main thread ]
 	// 			success -> return: 0	// fail -> return: errno
 	detach_res = pthread_detach(tid);
-	printf("detaced result: %d\n", detach_res);
+	printf("detached result: %d\n", detach_res);
 
 	// [ 3. (join)wait for thread ]
 	// args:	1. thread(ID)
 	//			2.thread function's return value
 	join_res = pthread_join(tid, NULL);
-	printf("join result: %d\n", join_res);
+	printf("joined result: %d\n", join_res);
+	
 	return (0);
 }
