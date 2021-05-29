@@ -2,7 +2,16 @@ NAME		= philo_one
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
-SRCS		= main.c print_err_msg.c set_rule_info.c is_invalid.c handle_thread.c
+SRCS		=	main.c \
+				print_err_msg.c \
+				set_rule_info.c \
+				is_invalid.c \
+				handle_thread.c \
+				gen_philos.c \
+				handle_resources.c \
+				print_philos.c \
+				eat.c
+
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 OBJDIR		= ./objs
