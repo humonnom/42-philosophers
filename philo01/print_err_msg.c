@@ -13,6 +13,8 @@ void
 		printf("[ Invalid time set(over 60ms) ]\n");
 	else if (err_number == INVALID_RULE)
 		printf("[ Invalid rule ]\n");
+	else if (err_number == FAIL_MALLOC)
+		printf("[ Malloc failed ]\n");
 	else
 		printf("[ Unspecified error occurred ]\n");
 }

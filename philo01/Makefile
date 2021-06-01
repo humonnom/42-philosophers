@@ -10,7 +10,16 @@ SRCS		=	main.c \
 				gen_philos.c \
 				handle_resources.c \
 				print_philos.c \
-				eat.c
+				act_eat.c \
+				act_sleep.c \
+				act_think.c \
+				grab_forks.c \
+				dump_forks.c \
+				get_time.c \
+				philo_routine.c \
+				watch_count.c \
+				display_message.c
+
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 

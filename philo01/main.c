@@ -13,25 +13,25 @@ int
 		ret = 1;
 	if (!ret && is_invalid_rule(&(info.rule)))
 		ret = INVALID_RULE;
-	if (!ret && gen_philos(&(info.philo), info.rule.number_of_philos))
+	if (!ret && gen_philos(&(info.philo), &(info.rule)))
 		ret = FAIL_MALLOC;
 
-	// printf("before gen thread\n");
-
-	// do something
 	if (!ret && handle_thread(&info))
 		ret = info.errcode;
 
-	if (!ret) // test
-		print_philos(info.philo, info.rule.number_of_philos);
+	// test
+	// if (!ret)
+	// 	print_philos(info.philo, info.rule.number_of_philos);
 
 	//detach
 	// printf("time to die is %d\ntime to eat is %d\ntime to sleep is %d\n", info.rule.time_to_die, info.rule.time_to_eat, info.rule.time_to_sleep);
 	// printf("%d philos has to eat %d times\n", info.rule.number_of_philos, info.rule.number_of_eat);
 
 	if (ret != FAIL_MALLOC)
-		handle_resources(info.philo);
+		handle_resources(info.philo, info.rule.number_of_philos);
 	if (ret)
 		print_err_msg(ret);
+	// while(1)
+	// 	;
 	return (ret);
 }
