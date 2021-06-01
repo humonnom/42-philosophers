@@ -7,6 +7,7 @@ void
 	int		i;
 	int		j;
 
+	j = 0;
 	rule = (t_rule *)arg;
 	while (j < rule->number_of_eat)
 	{

@@ -21,6 +21,7 @@ void
 	char		*message;
 	int			time;
 
+	//pthread_mutex_lock(&philo->rule->write_mutex);
 	message = get_type_message(type);
 	if (!message)
 		return ;
@@ -30,4 +31,5 @@ void
 	// printf("[start : %llu]\n", philo->rule->start_time);
 	// printf("[time : %llu]\n", time);
 	printf("%d\t%d %s", time, philo->philo_id, message);
+	//pthread_mutex_unlock(&philo->rule->write_mutex);
 }

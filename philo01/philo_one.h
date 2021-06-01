@@ -10,26 +10,30 @@
 //structure
 typedef struct			s_rule
 {
+	pthread_mutex_t		write_mutex;
+	pthread_mutex_t		grab_mutex;
+	pthread_mutex_t		dump_mutex;
+	pthread_mutex_t		*forks;
+	int					*forks_locked;
 	uint64_t			time_to_die;
 	uint64_t			time_to_eat;
 	uint64_t			time_to_sleep;
+	uint64_t			start_time;
 	int					number_of_philos;
 	int					number_of_eat;
-	uint64_t			start_time;
+	int					*status;
 }						t_rule;
 
 typedef struct			s_philo
 {
-	pthread_t			thread;
 	pthread_mutex_t		mutex;
 	pthread_mutex_t		eat_mutex;
-	pthread_mutex_t		*forks;
-	int					status;
-	int					philo_id;
+	pthread_t			thread;
 	uint64_t			eat_start;
 	uint64_t			sleep_start;
+	uint64_t			time_left;
 	int					eat_left;
-	int					time_left;
+	int					philo_id;
 	int					right_fork;
 	int					left_fork;
 	t_rule				*rule;
@@ -57,10 +61,11 @@ typedef struct			s_info
 # define UNDECIDED 0
 
 # define TYPE_EAT 0
-# define TYPE_SLEEP 1
-# define TYPE_THINK 2
-# define TYPE_FORK 3
-# define TYPE_DIED 4
+# define TYPE_HUNGRY 1
+# define TYPE_SLEEP 2
+# define TYPE_THINK 3
+# define TYPE_FORK 4
+# define TYPE_DIED 5
 # define TYPE_NONE 10
 
 //functions
@@ -87,8 +92,7 @@ int
 				t_philo **philos_head,
 				t_rule *rule);
 int
-	handle_resources(t_philo *philos,
-					int number_of_philos);
+	handle_resources(t_philo *philos);
 
 
 void
@@ -128,5 +132,9 @@ void
 				int number_of_philos);
 void
     print_forks_status(t_philo *philo, int number_of_philos);
+
+
+void
+	print_forks(t_philo *philo);
 
 #endif

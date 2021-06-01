@@ -1,7 +1,7 @@
 NAME		= philo_one
 
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -g
 SRCS		=	main.c \
 				print_err_msg.c \
 				set_rule_info.c \
@@ -18,7 +18,8 @@ SRCS		=	main.c \
 				get_time.c \
 				philo_routine.c \
 				watch_count.c \
-				display_message.c
+				display_message.c \
+				print_forks.c
 
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
@@ -31,11 +32,11 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@$(MAKE) -C $(LIBDIR) all
-			@$(CC) $(CFLAGS) -o $(NAME) $(LIBFT) $(OBJS) -lpthread
+			$(CC) $(CFLAGS) -o $(NAME) $(LIBFT) $(OBJS) -lpthread
 
 $(OBJDIR)/%.o:%.c
 			@mkdir $(OBJDIR) 2> /dev/null || true
-			@$(CC) -I./philo_one.h -o $@ -c $<
+			$(CC) $(CFLAGS) -I./philo_one.h -o $@ -c $<
 
 clean:
 			@rm -rf $(OBJDIR) 2> /dev/null || true
@@ -48,7 +49,7 @@ fclean:		clean
 re:			fclean all
 
 test:		re
-			@./$(NAME) 4 200 200 200
+			@./$(NAME) 4 410 200 200
 
 err:		re
 			@./$(NAME) 4 200 200 200 -5

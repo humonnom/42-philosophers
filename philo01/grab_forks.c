@@ -3,9 +3,17 @@
 void
 	grab_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->forks[philo->left_fork]);
+	if (philo->philo_id % 2)
+	{
+		pthread_mutex_lock(&philo->rule->forks[philo->right_fork]);
+		pthread_mutex_lock(&philo->rule->forks[philo->left_fork]);
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->rule->forks[philo->left_fork]);
+		pthread_mutex_lock(&philo->rule->forks[philo->right_fork]);
+	}
 	display_message(philo, TYPE_FORK);
-	pthread_mutex_lock(&philo->forks[philo->right_fork]);
 	display_message(philo, TYPE_FORK);
 	return ;
 }

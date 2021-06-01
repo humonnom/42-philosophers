@@ -4,5 +4,10 @@
   "editor.renderWhitespace": "all",
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
-  "editor.rulers": [80]
+  "editor.rulers": [
+    80
+  ],
+  "files.associations": {
+    "ios": "c"
+  }
 }
