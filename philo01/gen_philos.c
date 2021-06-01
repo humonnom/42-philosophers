@@ -32,5 +32,4 @@ int
  	}
 	*head = philos;
 	return (0);
-
 }

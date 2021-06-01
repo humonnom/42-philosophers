@@ -1,6 +1,5 @@
 #include "philo_one.h"
 
-// void
 //     print_forks_status(t_philo *philo, int number_of_philos)
 // {
 //     printf("forks-status: ");

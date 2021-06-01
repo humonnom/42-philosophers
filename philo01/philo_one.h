@@ -35,7 +35,6 @@ typedef struct			s_philo
 	t_rule				*rule;
 }						t_philo;
 
-
 typedef struct			s_info
 {
 	t_rule				rule;
