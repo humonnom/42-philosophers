@@ -10,21 +10,21 @@ static int
     i = -1;
     while (++i < rule->number_of_philos)
         pthread_mutex_init(&rule->forks[i], NULL);
-    rule->forks_locked = (int *)malloc(sizeof(int) * rule->number_of_philos);
-	if (!rule->forks_locked)
-    {
-        free(rule->forks);
-		return (1);
-    }
-    ft_memset(rule->forks_locked, 0, sizeof(int) * rule->number_of_philos);
-    rule->status = (int *)malloc(sizeof(int) * rule->number_of_philos);
+    // rule->forks_locked = (int *)malloc(sizeof(int) * rule->number_of_philos);
+	// if (!rule->forks_locked)
+    // {
+    //     free(rule->forks);
+	// 	return (1);
+    // }
+    // ft_memset(rule->forks_locked, 0, sizeof(int) * rule->number_of_philos);
+    rule->status = (int *)malloc(sizeof(int) * rule->number_of_philos + 1);
 	if (!rule->status)
     {
         free(rule->forks);
-        free(rule->forks_locked);
+        //free(rule->forks_locked);
 		return (1);
     }
-    ft_memset(rule->status, TYPE_HUNGRY, sizeof(int) * rule->number_of_philos);
+    ft_memset(rule->status, TYPE_HUNGRY, sizeof(int) * rule->number_of_philos + 1);
     return (0);
 }
 
@@ -32,8 +32,7 @@ void
     init_mutexs(t_rule *rule)
 {
     pthread_mutex_init(&rule->write_mutex, NULL);
-    //pthread_mutex_init(&rule->grab_mutex, NULL);
-    //pthread_mutex_init(&rule->dump_mutex, NULL);
+    pthread_mutex_init(&rule->check_fork_mutex, NULL);
 }
 
 
@@ -55,5 +54,6 @@ int
     if (set_forks_info(rule))
         return (1);
     init_mutexs(rule);
+    rule->errcode = 0;
     return (0);
 }

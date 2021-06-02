@@ -24,59 +24,86 @@ static void
 }
 
 
+
+
 static int
-	check_if_philo_died(t_philo *philo)
+	check_died(t_philo *philo)
 {
-	pthread_t	tid;
+	int	ret;
 
-	if (pthread_create(&tid, NULL, &watch_philos_life, (void *)philo))
-		return (0);
-	pthread_detach(tid);
-	return (1);
+	ret = 0;
+	pthread_mutex_lock(&philo->rule->write_mutex);
+	if (philo->rule->status[philo->philo_id] == TYPE_DIED)
+		ret = 1;
+	//kill every thread;
+	printf(ANSI_COLOR_MAGENTA"kill every thread\n"ANSI_COLOR_RESET);
+	pthread_mutex_unlock(&philo->rule->write_mutex);
+	return (ret);
+
 }
-#endif
 
+static int
+	check_done(t_philo *philo)
+{
+	int	ret;
+
+	ret = 0;
+	pthread_mutex_lock(&philo->rule->write_mutex);
+	if (philo->rule->status[philo->philo_id] == TYPE_DONE)
+		ret = 1;
+	//kill this thread;
+	printf(ANSI_COLOR_MAGENTA"kill this thread\n"ANSI_COLOR_RESET);
+	pthread_mutex_unlock(&philo->rule->write_mutex);
+	return (ret);
+
+}
+		// if (check_done(philo))
+		// 	return (0);
+		// if (check_died(philo))
+		// 	return (exit_program(philo));
+#endif
 int
 	check_both_side_status(t_philo *philo)
 {
 	int left;
 	int right;
+	int ret;
 
-
+	ret = 0;
+	pthread_mutex_lock(&philo->rule->check_fork_mutex);
 	left = philo->philo_id + 1;
 	if (left > philo->rule->number_of_philos)
 		left = 1;
 	right = philo->philo_id - 1;
 	if (right < 0)
 		right = philo->rule->number_of_philos;
-	if (philo->rule->status[left] == TYPE_EAT)
-		return (1);
-	if (philo->rule->status[right] == TYPE_EAT)
-		return (1);
-	return (0);
+	if (philo->rule->status[left] == TYPE_EAT || philo->rule->status[right] == TYPE_EAT)
+		ret = 1;
+	pthread_mutex_unlock(&philo->rule->check_fork_mutex);
+	return (ret);
 }
 
 void
 	*philo_routine(void *arg)
 {
 	t_philo 	*philo;
+	//int			ret;
 
 	philo = (t_philo *)arg;
-	// if (!check_if_philo_died(philo))
-	// 	return ((void *)1);
+
+	//ret = pthread_create();
+	// if (ret)
+	// 	return (1);
 	while (1)
 	{
 		if (check_both_side_status(philo))
-		{
-			//printf("check\n");
 			continue;
-		}
 		grab_forks(philo);
 		act_eat(philo);
-		dump_forks(philo);
-		//act_sleep(philo);
-		//act_think(philo);
-		break;
+		release_forks(philo);
+		act_sleep(philo);
+		act_think(philo);
+		//break;
 	}
 	return (0);
 }

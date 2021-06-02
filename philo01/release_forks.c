@@ -1,7 +1,7 @@
 #include "philo_one.h"
 
 void
-	dump_forks(t_philo *philo)
+	release_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(&philo->rule->forks[philo->right_fork]);
 	pthread_mutex_unlock(&philo->rule->forks[philo->left_fork]);

@@ -11,10 +11,8 @@
 typedef struct			s_rule
 {
 	pthread_mutex_t		write_mutex;
-	pthread_mutex_t		grab_mutex;
-	pthread_mutex_t		dump_mutex;
+	pthread_mutex_t		check_fork_mutex;
 	pthread_mutex_t		*forks;
-	int					*forks_locked;
 	uint64_t			time_to_die;
 	uint64_t			time_to_eat;
 	uint64_t			time_to_sleep;
@@ -22,6 +20,8 @@ typedef struct			s_rule
 	int					number_of_philos;
 	int					number_of_eat;
 	int					*status;
+	int					state;
+	int					errcode;
 }						t_rule;
 
 typedef struct			s_philo
@@ -30,7 +30,6 @@ typedef struct			s_philo
 	pthread_mutex_t		eat_mutex;
 	pthread_t			thread;
 	uint64_t			eat_start;
-	uint64_t			sleep_start;
 	uint64_t			time_left;
 	int					eat_left;
 	int					philo_id;
@@ -43,7 +42,6 @@ typedef struct			s_info
 {
 	t_rule				rule;
 	t_philo				*philo;
-	int					errcode;
 }						t_info;
 
 //macro
@@ -66,11 +64,19 @@ typedef struct			s_info
 # define TYPE_THINK 3
 # define TYPE_FORK 4
 # define TYPE_DIED 5
+# define TYPE_DONE 6
 # define TYPE_NONE 10
 
+# define ANSI_COLOR_RED     "\x1b[31m"
+# define ANSI_COLOR_GREEN   "\x1b[32m"
+# define ANSI_COLOR_YELLOW  "\x1b[33m"
+# define ANSI_COLOR_BLUE    "\x1b[34m"
+# define ANSI_COLOR_MAGENTA "\x1b[35m"
+# define ANSI_COLOR_CYAN    "\x1b[36m"
+# define ANSI_COLOR_RESET   "\x1b[0m"
 //functions
 void
-	print_err_msg(int err_number);
+	display_err_message(int err_number);
 
 int
 	is_invalid_arg_num(int argc);
@@ -91,15 +97,13 @@ int
 	gen_philos(
 				t_philo **philos_head,
 				t_rule *rule);
-int
-	handle_resources(t_philo *philos);
 
 
 void
 	grab_forks(t_philo *philo);
 
 void
-	dump_forks(t_philo *philo);
+	release_forks(t_philo *philo);
 
 void
 	act_eat(t_philo *philo);
@@ -118,11 +122,16 @@ uint64_t
 void
 	*philo_routine(void *arg);
 
-void
-	*watch_count(void *arg);
 
 void
 	display_message(t_philo *philo, int type);
+
+int
+	exit_program(t_philo *philo);
+
+
+void
+	watch_died_or_done(t_info *info);
 
 ////////////////////
 
@@ -133,8 +142,13 @@ void
 void
     print_forks_status(t_philo *philo, int number_of_philos);
 
-
-void
-	print_forks(t_philo *philo);
-
 #endif
+// [trash]
+// void
+// 	*watch_count(void *arg);
+
+// int
+// 	handle_resources(t_philo *philos);
+
+// void
+// 	print_forks(t_philo *philo);

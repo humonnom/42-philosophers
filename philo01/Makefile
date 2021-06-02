@@ -3,23 +3,26 @@ NAME		= philo_one
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra -g
 SRCS		=	main.c \
-				print_err_msg.c \
 				set_rule_info.c \
 				is_invalid.c \
 				handle_thread.c \
 				gen_philos.c \
-				handle_resources.c \
 				print_philos.c \
+				display_err_message.c \
 				act_eat.c \
 				act_sleep.c \
 				act_think.c \
 				grab_forks.c \
-				dump_forks.c \
+				release_forks.c \
 				get_time.c \
 				philo_routine.c \
-				watch_count.c \
 				display_message.c \
-				print_forks.c
+				exit_program.c \
+				watch_died_or_done.c \
+				# \
+				print_forks.c \
+				watch_count.c \
+				handle_resources.c \
 
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
