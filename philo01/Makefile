@@ -52,7 +52,7 @@ fclean:		clean
 re:			fclean all
 
 test:		re
-			@./$(NAME) 4 410 200 200
+			@./$(NAME) 6 610 200 200
 
 err:		re
 			@./$(NAME) 4 200 200 200 -5

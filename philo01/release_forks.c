@@ -5,5 +5,6 @@ void
 {
 	pthread_mutex_unlock(&philo->rule->forks[philo->right_fork]);
 	pthread_mutex_unlock(&philo->rule->forks[philo->left_fork]);
+	philo->hands = TYPE_NONE;
 	return ;
 }

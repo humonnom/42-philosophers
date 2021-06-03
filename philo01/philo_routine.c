@@ -23,9 +23,6 @@ static void
 	}
 }
 
-
-
-
 static int
 	check_died(t_philo *philo)
 {
@@ -39,7 +36,6 @@ static int
 	printf(ANSI_COLOR_MAGENTA"kill every thread\n"ANSI_COLOR_RESET);
 	pthread_mutex_unlock(&philo->rule->write_mutex);
 	return (ret);
-
 }
 
 static int
@@ -87,23 +83,21 @@ void
 	*philo_routine(void *arg)
 {
 	t_philo 	*philo;
-	//int			ret;
+	int			ret;
 
+	ret = 0;
 	philo = (t_philo *)arg;
-
-	//ret = pthread_create();
-	// if (ret)
-	// 	return (1);
-	while (1)
+	while (!ret)
 	{
 		if (check_both_side_status(philo))
 			continue;
-		grab_forks(philo);
-		act_eat(philo);
-		release_forks(philo);
-		act_sleep(philo);
-		act_think(philo);
-		//break;
+		ret = grab_forks(philo);
+		ret = act_eat(philo);
+		if (philo->hands == TYPE_FORK)
+			release_forks(philo);
+		ret = act_sleep(philo);
+		ret = act_think(philo);
+		break;
 	}
 	return (0);
 }

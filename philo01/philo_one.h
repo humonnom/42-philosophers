@@ -35,6 +35,7 @@ typedef struct			s_philo
 	int					philo_id;
 	int					right_fork;
 	int					left_fork;
+	int					hands;
 	t_rule				*rule;
 }						t_philo;
 
@@ -99,21 +100,21 @@ int
 				t_rule *rule);
 
 
-void
+int
 	grab_forks(t_philo *philo);
 
 void
 	release_forks(t_philo *philo);
 
-void
+int
 	act_eat(t_philo *philo);
 
 
-void
+int
 	act_sleep(t_philo *philo);
 
 
-void
+int
 	act_think(t_philo *philo);
 
 uint64_t
@@ -123,7 +124,7 @@ void
 	*philo_routine(void *arg);
 
 
-void
+int
 	display_message(t_philo *philo, int type);
 
 int
@@ -131,7 +132,7 @@ int
 
 
 void
-	watch_died_or_done(t_info *info);
+	*watch_died_or_done(void *arg);
 
 ////////////////////
 

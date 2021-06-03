@@ -21,14 +21,16 @@ static void
 }
 
 void
-	watch_died_or_done(t_info *info)
+	*watch_died_or_done(void *arg)
 {
-	int i;
+	int		i;
+	t_info	*info;
 
+	info = (t_info *)arg;
 	while (1)
 	{
-		i = 0;
-		while (i < info->rule.number_of_philos)
+		i = -1;
+		while (++i < info->rule.number_of_philos)
 		{
 			watch_died(&info->philo[i]);
 			watch_done(&info->philo[i]);

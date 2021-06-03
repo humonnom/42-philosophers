@@ -1,8 +1,7 @@
 #include "philo_one.h"
 
-void
+int
 	act_think(t_philo *philo)
 {
-	display_message(philo, TYPE_THINK);
-	return ;
+	return (display_message(philo, TYPE_THINK));
 }
