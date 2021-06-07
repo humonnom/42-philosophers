@@ -23,20 +23,6 @@ static void
 	}
 }
 
-static int
-	check_died(t_philo *philo)
-{
-	int	ret;
-
-	ret = 0;
-	pthread_mutex_lock(&philo->rule->write_mutex);
-	if (philo->rule->status[philo->philo_id] == TYPE_DIED)
-		ret = 1;
-	//kill every thread;
-	printf(ANSI_COLOR_MAGENTA"kill every thread\n"ANSI_COLOR_RESET);
-	pthread_mutex_unlock(&philo->rule->write_mutex);
-	return (ret);
-}
 
 static int
 	check_done(t_philo *philo)
@@ -58,6 +44,9 @@ static int
 		// if (check_died(philo))
 		// 	return (exit_program(philo));
 #endif
+
+
+
 int
 	check_both_side_status(t_philo *philo)
 {
@@ -83,21 +72,42 @@ void
 	*philo_routine(void *arg)
 {
 	t_philo 	*philo;
-	int			ret;
 
-	ret = 0;
 	philo = (t_philo *)arg;
-	while (!ret)
+	if (pthread_create(&philo->watcher, NULL, &watch_died_or_done, arg))
+		return ((void *)1);
+	while (philo->rule->state != TYPE_DIED)
 	{
 		if (check_both_side_status(philo))
 			continue;
-		ret = grab_forks(philo);
-		ret = act_eat(philo);
+		if (grab_forks(philo))
+		{
+			//printf("grab [%d]state: %d\n", philo->philo_id, philo->rule->status[philo->philo_id]);
+			//printf("grab died\n");
+			break ;
+		}
+		if (act_eat(philo))
+		{
+			//printf("eat [%d]state: %d\n", philo->philo_id, philo->rule->status[philo->philo_id]);
+			//printf("eat died\n");
+			break ;
+		}
 		if (philo->hands == TYPE_FORK)
 			release_forks(philo);
-		ret = act_sleep(philo);
-		ret = act_think(philo);
-		break;
+		if (act_sleep(philo))
+		{
+			//printf("sleep [%d]state: %d\n", philo->philo_id, philo->rule->status[philo->philo_id]);
+			//printf("sleep died\n");
+			break ;
+		}
+		if (act_think(philo))
+		{
+			//printf("think [%d]state: %d\n", philo->philo_id, philo->rule->status[philo->philo_id]);
+			//printf("think died\n");
+			break ;
+		}
 	}
+	//printf("exit philo routine[%d]state: %d\n", philo->philo_id, philo->rule->status[philo->philo_id]);
+	//pthread_detach(philo->watcher);
 	return (0);
 }

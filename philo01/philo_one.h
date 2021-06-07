@@ -11,6 +11,7 @@
 typedef struct			s_rule
 {
 	pthread_mutex_t		write_mutex;
+	pthread_mutex_t		watch_mutex;
 	pthread_mutex_t		check_fork_mutex;
 	pthread_mutex_t		*forks;
 	uint64_t			time_to_die;
@@ -29,6 +30,7 @@ typedef struct			s_philo
 	pthread_mutex_t		mutex;
 	pthread_mutex_t		eat_mutex;
 	pthread_t			thread;
+	pthread_t			watcher;
 	uint64_t			eat_start;
 	uint64_t			time_left;
 	int					eat_left;
@@ -59,14 +61,15 @@ typedef struct			s_info
 
 # define UNDECIDED 0
 
-# define TYPE_EAT 0
-# define TYPE_HUNGRY 1
+# define TYPE_HUNGRY 0
+# define TYPE_EAT 1
 # define TYPE_SLEEP 2
 # define TYPE_THINK 3
 # define TYPE_FORK 4
 # define TYPE_DIED 5
 # define TYPE_DONE 6
 # define TYPE_NONE 10
+# define TYPE_UNSET_COLOR 11
 
 # define ANSI_COLOR_RED     "\x1b[31m"
 # define ANSI_COLOR_GREEN   "\x1b[32m"
