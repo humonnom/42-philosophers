@@ -1,40 +1,37 @@
 #include "philo_one.h"
 
 static int
-	create_thread_group(t_info *info, int from)
+	create_thread_group(t_rule *rule, int from)
 {
-	void	*arg;
 	int		ret;
+	void	*arg;
 	int		i;
 
 	ret = 0;
 	i = from;
-	while (!ret && i < info->rule.number_of_philos)
+	while (!ret && i < rule->number_of_philos)
 	{
-		arg = &(info->philo[i]);
-		ret = pthread_create(&info->philo[i].thread, NULL, &philo_routine, arg);
+		arg = &(rule->philo[i]);
+		ret = pthread_create(&rule->philo[i].thread, NULL, &philo_routine, arg);
 		if (!ret && i == 0)
-			usleep(1000);
+			usleep(100);
 		i += 2;
 	}
 	return (ret);
 }
 
-
 int
-	handle_thread(t_info *info)
+	handle_thread(t_rule *rule)
 {
 	int		i;
 	int		ret;
 	int		status;
 
-	ret = 0;
-	if (create_thread_group(info, 0))
-		ret = 1;
-	if (!ret && create_thread_group(info, 1))
-		ret = 1;
+	ret = create_thread_group(rule, 0);
+	if (!ret)
+		ret = create_thread_group(rule, 1);
 	i = -1;
-	while (!ret && ++i < info->rule.number_of_philos)
-		ret = pthread_join(info->philo[i].thread, (void **)&status);
+	while (!ret && ++i < rule->number_of_philos)
+	 	ret = pthread_join(rule->philo[i].thread, (void **)&status);
 	return (ret);
 }

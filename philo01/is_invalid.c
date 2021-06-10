@@ -3,7 +3,7 @@
 int
 	is_invalid_arg_num(int argc)
 {
-	if (argc == UNDECIDED_EAT_NUM || argc == DECICED_EAT_NUM)
+	if (argc == ARG_NUM_WITHOUT_NOE || argc == ARG_NUM_WITH_NOE)
 		return (0);
 	return (1);
 }

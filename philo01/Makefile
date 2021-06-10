@@ -3,27 +3,21 @@ NAME		= philo_one
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra -g
 SRCS		=	main.c \
-				set_rule_info.c \
+				set_rule.c \
 				is_invalid.c \
-				handle_thread.c \
 				gen_philos.c \
-				print_philos.c \
-				display_err_message.c \
+				exit_program.c \
+				get_time.c \
+				handle_thread.c \
+				philo_routine.c \
 				act_eat.c \
 				act_sleep.c \
 				act_think.c \
-				grab_forks.c \
-				release_forks.c \
-				get_time.c \
-				philo_routine.c \
 				display_message.c \
-				exit_program.c \
-				watch_died_or_done.c \
+				display_err_message.c \
+				watch_done.c \
+				watch_died.c \
 				# \
-				print_forks.c \
-				watch_count.c \
-				handle_resources.c \
-
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
@@ -51,13 +45,26 @@ fclean:		clean
 
 re:			fclean all
 
-test:		re
-			@./$(NAME) 4 210 200 200
+simple:		re
+			@./$(NAME) 8 410 100 100 1
 
-limit:		re
-			@./$(NAME) 4 410 200 200 3
+test:		re
+			@./$(NAME) 4 410 200 200
+			# "no one should die"
+
+test2:		re
+			@./$(NAME) 4 310 200 100
+			# "a philosopher should die"
+
+test3:		re
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
+
+noe:		re
+			@./$(NAME) 5 800 200 200 7
+			# "no one should die"
 
 err:		re
 			@./$(NAME) 4 200 200 200 -5
 
-.PHONY:		all clean fclean re test err
+.PHONY:		all clean fclean re simple test test2 test3 noe err
