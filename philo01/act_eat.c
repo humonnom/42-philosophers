@@ -38,7 +38,7 @@ int
 	pthread_detach(philo->watcher);
 	if (display_message(philo, TYPE_EAT))
 		return (1);
-	usleep(1000 * rule->time_to_eat);
+	usleep_loop(rule->time_to_eat);
 	if (philo->hands == TYPE_FORK)
 		release_forks(rule, philo);
 	return (0);

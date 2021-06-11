@@ -34,7 +34,7 @@ static void
 }
 
 static void
-	print_out_message(t_rule *rule, int type, int philo_id)
+	print_out_message(t_rule *rule, int type, int id)
 {
 	int			time;
 	char		*message;
@@ -42,7 +42,7 @@ static void
 	message = get_type_message(type);
 	time = get_time() - rule->start_time;
 	handle_text_color(type);
-	printf("%d\t%d %s", time, philo_id, message);
+	printf("%d\t%d %s", time, id, message);
 	handle_text_color(TYPE_RESET_COLOR);
 }
 
@@ -51,7 +51,7 @@ static int
 {
 	if (rule->print == NON_PRINT)
 		return (1);
-	if (rule->status[philo->philo_id] == TYPE_DONE)
+	if (rule->status[philo->id] == TYPE_DONE)
 		return (1);
 	if (type != TYPE_DIED && rule->state == TYPE_DIED)
 		return (1);
@@ -68,7 +68,7 @@ int
 	pthread_mutex_lock(&rule->write_mutex);
 	ret = is_invalid_print(rule, philo, type);
 	if (!ret)
-		print_out_message(rule, type,philo->philo_id);
+		print_out_message(rule, type,philo->id);
 	if (type == TYPE_DIED)
 	{
 		rule->print = NON_PRINT;

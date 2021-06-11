@@ -15,7 +15,7 @@ typedef struct			s_philo
 	pthread_t			watcher;
 	uint64_t			eat_start;
 	uint64_t			time_left;
-	int					philo_id;
+	int					id;
 	int					right_fork;
 	int					left_fork;
 	int					eat_left;
@@ -27,6 +27,7 @@ typedef struct			s_rule
 	pthread_mutex_t		write_mutex;
 	pthread_mutex_t		state_mutex;
 	pthread_mutex_t		check_fork_mutex;
+	pthread_mutex_t		usleep_mutex;
 	pthread_mutex_t		*forks;
 	uint64_t			time_to_die;
 	uint64_t			time_to_eat;
@@ -129,5 +130,8 @@ int
 
 void
 	*watch_died(void *arg);
+
+int
+	usleep_loop(int ms);
 
 #endif

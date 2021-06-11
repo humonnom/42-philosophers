@@ -5,7 +5,7 @@ int
 {
 	printf("exit_program\n");
 	#if 0
-	//printf("PROGRAM OVER :from %d\n", philo->philo_id);
+	//printf("PROGRAM OVER :from %d\n", philo->id);
 	printf("philo->rule->errcode:%d\n",philo->rule->errcode);
 	if (philo->rule->errcode)
 		display_err_message(philo->rule->errcode);

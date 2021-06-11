@@ -8,6 +8,6 @@ int
 	rule = call_rule();
 	if (display_message(philo, TYPE_SLEEP))
 		return (1);
-	usleep(1000 * rule->time_to_sleep);
+	usleep_loop(rule->time_to_sleep);
 	return (0);
 }

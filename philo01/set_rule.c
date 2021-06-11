@@ -28,6 +28,7 @@ static void
     pthread_mutex_init(&rule->write_mutex, NULL);
     pthread_mutex_init(&rule->check_fork_mutex, NULL);
     pthread_mutex_init(&rule->state_mutex, NULL);
+    pthread_mutex_init(&rule->usleep_mutex, NULL);
 }
 
 

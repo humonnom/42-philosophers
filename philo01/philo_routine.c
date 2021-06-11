@@ -9,7 +9,6 @@ void
 	philo = (t_philo *)arg;
 	while (1)
 	{
-
 		if (watch_done(philo))
 			return ((void *)1);
 		if (act_eat(philo))

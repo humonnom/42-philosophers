@@ -11,8 +11,7 @@ int
 	if (philo->eat_left <= 0)
 	{
 		pthread_mutex_lock(&rule->state_mutex);
-		rule->status[philo->philo_id] = TYPE_DONE;
-		rule->state = TYPE_DONE;
+		rule->status[philo->id] = TYPE_DONE;
 		pthread_mutex_unlock(&rule->state_mutex);
 		return (1);
 	}

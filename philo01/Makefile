@@ -17,6 +17,7 @@ SRCS		=	main.c \
 				display_err_message.c \
 				watch_done.c \
 				watch_died.c \
+				usleep_loop.c \
 				# \
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
