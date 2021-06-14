@@ -10,9 +10,9 @@ int
 		return (0);
 	if (philo->eat_left <= 0)
 	{
-		pthread_mutex_lock(&rule->state_mutex);
+		sem_wait(rule->state_sem);
 		rule->status[philo->id] = TYPE_DONE;
-		pthread_mutex_unlock(&rule->state_mutex);
+		sem_post(rule->state_sem);
 		return (1);
 	}
 	return (0);

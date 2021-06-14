@@ -4,12 +4,12 @@ static int
     set_forks_rule(t_rule *rule)
 {
     int             i;
-    rule->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * rule->number_of_philos);
+    rule->forks = (sem_t **)malloc(sizeof(sem_t *) * rule->number_of_philos);
 	if (!rule->forks)
 		return (1);
     i = -1;
     while (++i < rule->number_of_philos)
-        pthread_mutex_init(&rule->forks[i], NULL);
+        rule->forks[i] = sem_open(ft_itoa(i), 0, 0);
     rule->status = (int *)malloc(sizeof(int) * rule->number_of_philos + 1);
 	if (!rule->status)
     {
@@ -23,7 +23,7 @@ static int
 }
 
 static void
-    init_mutexs(t_rule *rule)
+    open_sems(t_rule *rule)
 {
     rule->write_sem = sem_open("write", 0, 0);
     rule->check_fork_sem = sem_open("check_fork", 0, 0);
@@ -49,7 +49,7 @@ int
     rule->start_time = get_time();
     if (set_forks_rule(rule))
         return (1);
-    init_mutexs(rule);
+    open_sems(rule);
     rule->state = TYPE_NONE;
     rule->state = PRINT;
     rule->errcode = 0;

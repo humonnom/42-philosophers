@@ -65,7 +65,7 @@ int
 	t_rule		*rule;
 
 	rule = call_rule();
-	pthread_mutex_lock(&rule->write_mutex);
+	sem_wait(rule->write_sem);
 	ret = is_invalid_print(rule, philo, type);
 	if (!ret)
 		print_out_message(rule, type,philo->id);
@@ -74,6 +74,6 @@ int
 		rule->print = NON_PRINT;
 		ret = 1;
 	}
-	pthread_mutex_unlock(&rule->write_mutex);
+	sem_post(rule->write_sem);
 	return (ret);
 }

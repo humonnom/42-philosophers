@@ -14,10 +14,10 @@ void
 	if (rule->status[philo->id] != TYPE_DONE && eat_left_old == philo->eat_left)
 	{
 		rule->status[philo->id] = TYPE_DIED;
-		pthread_mutex_lock(&rule->state_mutex);
+		sem_wait(rule->state_sem);
 		rule->state = TYPE_DIED;
 		display_message(philo, TYPE_DIED);
-		pthread_mutex_unlock(&rule->state_mutex);
+		sem_post(rule->state_sem);
 	}
 	return ((void *)0);
 }

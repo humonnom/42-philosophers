@@ -5,9 +5,9 @@
 // semaphore.h
 // sem_close
 // sem_open
-// pthread_mutex_unlock
+// sem_post
 // sem_unlink
-// pthread_mutex_lock
+// sem_wait
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -25,7 +25,7 @@ void
     char *str;
 
     //wait : lock the semaphore.(until call `post`)
-    pthread_mutex_lock(sem); // get the key.
+    sem_wait(sem); // get the key.
     str = (char *)arg;
     while (*str)
     {
@@ -33,7 +33,7 @@ void
         str++;
     }
     //post : unlock the semaphore.
-    pthread_mutex_unlock(sem); // return the key.
+    sem_post(sem); // return the key.
     return ((void *)0);
 }
 
@@ -42,14 +42,14 @@ void
 {
     char *str;
 
-    pthread_mutex_lock(sem);
+    sem_wait(sem);
     str = (char *)arg;
     while (*str)
     {
         g_num++;
         str++;
     }
-    pthread_mutex_unlock(sem);
+    sem_post(sem);
     return ((void *)0);
 }
 

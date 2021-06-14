@@ -3,6 +3,8 @@ NAME		= philo_bonus
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra -g
 SRCS		=	main.c \
+				call_rule.c \
+				do_something.c \
 				# \
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))

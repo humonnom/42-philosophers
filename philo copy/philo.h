@@ -30,11 +30,11 @@ typedef struct			s_philo
 
 typedef struct			s_rule
 {
-	sem_t				write_sem;
-	sem_t				state_sem;
-	sem_t				check_fork_sem;
-	sem_t				usleep_sem;
-	sem_t				*forks;
+	sem_t				*write_sem;
+	sem_t				*state_sem;
+	sem_t				*check_fork_sem;
+	sem_t				*usleep_sem;
+	sem_t				**forks;
 	uint64_t			time_to_die;
 	uint64_t			time_to_eat;
 	uint64_t			time_to_sleep;

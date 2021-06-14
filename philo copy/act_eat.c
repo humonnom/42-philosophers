@@ -3,8 +3,8 @@
 static int
 	grab_forks(t_rule *rule, t_philo *philo)
 {
-	pthread_mutex_lock(&rule->forks[philo->left_fork]);
-	pthread_mutex_lock(&rule->forks[philo->right_fork]);
+	sem_wait(rule->forks[philo->left_fork]);
+	sem_wait(rule->forks[philo->right_fork]);
 	philo->hands = TYPE_FORK;
 	if (display_message(philo, TYPE_FORK))
 		return (1);
@@ -17,8 +17,8 @@ static int
 static void
 	release_forks(t_rule *rule, t_philo *philo)
 {
-	pthread_mutex_unlock(&rule->forks[philo->left_fork]);
-	pthread_mutex_unlock(&rule->forks[philo->right_fork]);
+	sem_post(rule->forks[philo->left_fork]);
+	sem_post(rule->forks[philo->right_fork]);
 	philo->hands = TYPE_NONE;
 }
 
