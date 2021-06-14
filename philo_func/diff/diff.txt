@@ -1,0 +1,18 @@
+1,2d0
+< exit
+< fork
+5d2
+< kill
+12,16c9,12
+< sem_close
+< sem_open
+< pthread_mutex_unlock
+< sem_unlink
+< pthread_mutex_lock
+---
+> pthread_mutex_destroy
+> pthread_mutex_init
+> pthread_mutex_lock
+> pthread_mutex_unlock
+18d13
+< waitpid
