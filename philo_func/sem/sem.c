@@ -16,7 +16,7 @@
 #include <semaphore.h>
 #include <pthread.h>
 
-int g_num = 0;
+int         g_num = 0;
 sem_t       *sem;
 
 void
