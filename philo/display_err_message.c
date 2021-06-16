@@ -4,7 +4,7 @@ void
 	display_err_message(int err_number)
 {
 	if (err_number == INVALID_ARGC)
-		printf("[ Invalid argc ]\n");
+		printf("[ Invalid arg number ]\n");
 	else if (err_number == INVALID_EAT_NUM)
 		printf("[ Invalid eat number ]\n");
 	else if (err_number == INVALID_PHILOS_NUM)
@@ -16,5 +16,5 @@ void
 	else if (err_number == FAIL_MALLOC)
 		printf("[ Malloc failed ]\n");
 	else
-		printf("[ Unspecified error occurred ]\n");
+		printf("[ Undefined error occurred ]\n");
 }

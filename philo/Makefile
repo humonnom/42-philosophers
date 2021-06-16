@@ -1,13 +1,12 @@
-NAME		= philo
+NAME		=	philo
 
-CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -g
+CC			=	gcc
+CFLAGS		=	-Wall -Werror -Wextra -g
 SRCS		=	main.c \
-				set_rule.c \
-				call_rule.c \
+				set_public.c \
+				call_public.c \
 				is_invalid.c \
 				gen_philos.c \
-				exit_program.c \
 				get_time.c \
 				handle_thread.c \
 				philo_routine.c \
@@ -19,19 +18,18 @@ SRCS		=	main.c \
 				watch_done.c \
 				watch_died.c \
 				usleep_loop.c \
+				utils.c \
+				garbage_collector.c \
 				# \
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 OBJDIR		= ./objs
-LIBDIR		= ./libft
-LIBFT		= -L./libft -lft
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			@$(MAKE) -C $(LIBDIR) all
-			$(CC) $(CFLAGS) -o $(NAME) $(LIBFT) $(OBJS) -lpthread
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
 
 $(OBJDIR)/%.o:%.c
 			@mkdir $(OBJDIR) 2> /dev/null || true
@@ -39,16 +37,11 @@ $(OBJDIR)/%.o:%.c
 
 clean:
 			@rm -rf $(OBJDIR) 2> /dev/null || true
-			@$(MAKE) -C $(LIBDIR) clean
 
 fclean:		clean
 			@rm -rf $(NAME) 2> /dev/null || true
-			@$(MAKE) -C $(LIBDIR) fclean
 
 re:			fclean all
-
-simple:		re
-			@./$(NAME) 8 410 100 100 1
 
 test:		re
 			@./$(NAME) 4 410 200 200
@@ -62,11 +55,18 @@ test3:		re
 			@./$(NAME) 5 800 200 200
 			# "no one should die"
 
+test4:		re
+			@./$(NAME) 1 800 200 200
+			# "a philosopher should die"
+
+test5:		re
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
+
 noe:		re
 			@./$(NAME) 5 800 200 200 7
 			# "no one should die"
 
-err:		re
-			@./$(NAME) 4 200 200 200 -5
+.PHONY:		all clean fclean re test test2 test3 test4 test5 noe
 
-.PHONY:		all clean fclean re simple test test2 test3 noe err
+#./philo 199 410 200 200 --> undead game...

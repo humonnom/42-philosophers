@@ -4,12 +4,12 @@
 int
 	usleep_loop(int ms)
 {
-	t_rule		*rule;
+	t_public	*public;
 	u_int64_t	start;
 	u_int64_t	end;
 	int		ret;
 
-	rule = call_rule();
+	public = call_public();
 	start = get_time();
 	end = start + ms;
 	ret = 0;
@@ -17,8 +17,10 @@ int
 	{
 		if (get_time() >= end)
 			break;
-		if (rule->state == TYPE_DIED)
+		//pthread_mutex_lock(&public->state_mutex);
+		if (public->state == TYPE_DIED)
 			ret = 1;
+		//pthread_mutex_unlock(&public->state_mutex);
 		usleep(50);
 	}
 	return (ret);

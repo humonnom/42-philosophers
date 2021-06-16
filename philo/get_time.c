@@ -3,8 +3,8 @@
 uint64_t
 	get_time(void)
 {
-	struct timeval time_info;
+	struct timeval tv;
 
-	gettimeofday(&time_info, NULL);
-	return (time_info.tv_sec * 1000 + time_info.tv_usec/1000);
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

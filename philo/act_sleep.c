@@ -3,11 +3,11 @@
 int
 	act_sleep(t_philo *philo)
 {
-	t_rule	*rule;
+	t_public	*public;
 
-	rule = call_rule();
+	public = call_public();
 	if (display_message(philo, TYPE_SLEEP))
 		return (1);
-	usleep_loop(rule->time_to_sleep);
+	usleep_loop(public->time_to_sleep);
 	return (0);
 }

@@ -1,7 +1,7 @@
 #include "philo.h"
 
 int
-	is_invalid_arg_num(int argc)
+	is_invalid_argc(int argc)
 {
 	if (argc == ARG_NUM_WITHOUT_NOE || argc == ARG_NUM_WITH_NOE)
 		return (0);
@@ -9,19 +9,19 @@ int
 }
 
 int
-	is_invalid_rule(t_rule *rule)
+	is_invalid_rule(t_public *public)
 {
-	if (rule->number_of_philos < 2)
+	if (public->nop < 2)
 		return (INVALID_PHILOS_NUM);
-	if (rule->number_of_philos > 200)
+	if (public->nop >= 200)
 		return (INVALID_PHILOS_NUM);
-	if (rule->time_to_eat < 60)
+	if (public->time_to_eat < 60)
 		return (INVALID_TIME_SET);
-	if (rule->time_to_sleep < 60)
+	if (public->time_to_sleep < 60)
 		return (INVALID_TIME_SET);
-	if (rule->time_to_die < 60)
+	if (public->time_to_die < 60)
 		return (INVALID_TIME_SET);
-	if (rule->number_of_eat < 0)
+	if (public->number_of_eat < 0)
 		return (INVALID_EAT_NUM);
 	return (0);
 }

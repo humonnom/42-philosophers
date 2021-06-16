@@ -10,19 +10,17 @@ static char
 		return("is sleeping\n");
 	if (type == TYPE_THINK)
 		return("is thinking\n");
-	if (type == TYPE_FORK)
+	if (type == TYPE_GRAB)
 		return("has taken a fork\n");
 	if (type == TYPE_DIED)
 		return("is died\n");
-	return("there is no message to print out\n");
+	return("UNDEFINED MESSAGE...\n");
 }
 
-static void
+static int
 	handle_text_color(int type)
 {
-	if (type == TYPE_RESET_COLOR)
-		printf(ANSI_COLOR_RESET);
-	else if (type == TYPE_DIED)
+	if (type == TYPE_DIED)
 		printf(ANSI_COLOR_RED);
 	else if (type == TYPE_EAT)
 		printf(ANSI_COLOR_YELLOW);
@@ -30,30 +28,34 @@ static void
 		printf(ANSI_COLOR_CYAN);
 	else if (type == TYPE_THINK)
 		printf(ANSI_COLOR_BLUE);
-	return ;
+	else
+		return (0);
+	return (1);
 }
 
 static void
-	print_out_message(t_rule *rule, int type, int id)
+	print_out_message(t_public *public, int type, int id)
 {
 	int			time;
 	char		*message;
+	int			color_set;
 
 	message = get_type_message(type);
-	time = get_time() - rule->start_time;
-	handle_text_color(type);
+	time = get_time() - public->start_time;
+	color_set = handle_text_color(type);
 	printf("%d\t%d %s", time, id, message);
-	handle_text_color(TYPE_RESET_COLOR);
+	if (color_set)
+		printf(ANSI_COLOR_RESET);
 }
 
 static int
-	is_invalid_print(t_rule *rule, t_philo *philo, int type)
+	is_invalid_print(t_public *public, t_philo *philo, int type)
 {
-	if (rule->print == NON_PRINT)
+	if (public->print_flag == TYPE_PRINT_INVALID)
 		return (1);
-	if (rule->status[philo->id] == TYPE_DONE)
+	if (public->status[philo->id] == TYPE_DONE)
 		return (1);
-	if (type != TYPE_DIED && rule->state == TYPE_DIED)
+	if (type != TYPE_DIED && public->state == TYPE_DIED)
 		return (1);
 	return (0);
 }
@@ -62,18 +64,20 @@ int
 	display_message(t_philo *philo, int type)
 {
 	int			ret;
-	t_rule		*rule;
+	t_public		*public;
 
-	rule = call_rule();
-	pthread_mutex_lock(&rule->write_mutex);
-	ret = is_invalid_print(rule, philo, type);
+	public = call_public();
+	ret = is_invalid_print(public, philo, type);
 	if (!ret)
-		print_out_message(rule, type,philo->id);
+	{
+		pthread_mutex_lock(&public->write_mutex);
+		print_out_message(public, type,philo->id);
+		pthread_mutex_unlock(&public->write_mutex);
+	}
 	if (type == TYPE_DIED)
 	{
-		rule->print = NON_PRINT;
+		public->print_flag = TYPE_PRINT_INVALID;
 		ret = 1;
 	}
-	pthread_mutex_unlock(&rule->write_mutex);
 	return (ret);
 }

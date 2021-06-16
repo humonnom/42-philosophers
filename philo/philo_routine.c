@@ -3,9 +3,9 @@ void
 	*philo_routine(void *arg)
 {
 	t_philo 	*philo;
-	t_rule		*rule;
+	t_public	*public;
 
-	rule = call_rule();
+	public = call_public();
 	philo = (t_philo *)arg;
 	while (1)
 	{
