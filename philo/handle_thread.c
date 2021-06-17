@@ -20,6 +20,14 @@ static int
 	return (ret);
 }
 
+static int
+	handle_one_philo(t_public *public)
+{
+	if (!usleep_loop(public->time_to_die))
+		display_message(public->philo, TYPE_DIED);
+	return (0);
+}
+
 int
 	handle_thread(t_public *public)
 {
@@ -27,7 +35,11 @@ int
 	int		ret;
 	int		status;
 
-	ret = create_thread_group(public, 0);
+	ret = 0;
+	if (public->nop == 1)
+		ret = handle_one_philo(public);
+	if (!ret)
+		ret = create_thread_group(public, 0);
 	if (!ret)
 		ret = create_thread_group(public, 1);
 	i = -1;

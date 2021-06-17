@@ -20,7 +20,6 @@ SRCS		=	main.c \
 				usleep_loop.c \
 				utils.c \
 				garbage_collector.c \
-				# \
 
 OBJS		= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
@@ -68,5 +67,4 @@ noe:		re
 			# "no one should die"
 
 .PHONY:		all clean fclean re test test2 test3 test4 test5 noe
-
-#./philo 199 410 200 200 --> undead game...
+#./philo 3 4100 2000 2000

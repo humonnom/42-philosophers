@@ -5,13 +5,13 @@ int
 {
 	if (argc == ARG_NUM_WITHOUT_NOE || argc == ARG_NUM_WITH_NOE)
 		return (0);
-	return (1);
+	return (INVALID_ARGC);
 }
 
 int
 	is_invalid_rule(t_public *public)
 {
-	if (public->nop < 2)
+	if (public->nop < 1)
 		return (INVALID_PHILOS_NUM);
 	if (public->nop >= 200)
 		return (INVALID_PHILOS_NUM);

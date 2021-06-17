@@ -6,20 +6,67 @@
 /*   By: juepark <juepark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:53:17 by juepark           #+#    #+#             */
-/*   Updated: 2021/06/16 20:31:21 by juepark          ###   ########.fr       */
+/*   Updated: 2021/06/17 14:52:31 by juepark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+/*
+** external functs.
+*/
+
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+
+/*
+** macros.
+*/
+
 # include <limits.h>
-# include<errno.h>
+# include <errno.h>
+
+/*
+** custom macros
+*/
+
+# define INVALID_ARGC 2
+# define INVALID_RULE 3
+# define INVALID_EAT_NUM 4
+# define INVALID_TIME_SET 5
+# define INVALID_PHILOS_NUM 6
+# define FAIL_MALLOC 7
+
+# define UNDECIDED_NOE 0
+# define ARG_NUM_WITHOUT_NOE 5
+# define ARG_NUM_WITH_NOE 6
+
+# define TYPE_INIT 0
+# define TYPE_EAT 1
+# define TYPE_SLEEP 2
+# define TYPE_THINK 3
+# define TYPE_DIED 4
+# define TYPE_DONE 5
+# define TYPE_EXIT 6
+# define TYPE_GRAB 7
+
+# define HANDS_TYPE_EMPTY 0
+# define HANDS_TYPE_FULL 1
+
+# define TYPE_PRINT_VALID 1
+# define TYPE_PRINT_INVALID 2
+
+# define ANSI_COLOR_RED     "\x1b[31m"
+# define ANSI_COLOR_GREEN   "\x1b[32m"
+# define ANSI_COLOR_YELLOW  "\x1b[33m"
+# define ANSI_COLOR_BLUE    "\x1b[34m"
+# define ANSI_COLOR_MAGENTA "\x1b[35m"
+# define ANSI_COLOR_CYAN    "\x1b[36m"
+# define ANSI_COLOR_RESET   "\x1b[0m"
 
 /*
 ** structure
@@ -51,59 +98,11 @@ typedef struct			s_public
 	int					*status;
 	int					state;
 	int					print_flag;
-	int					errcode;
 	t_philo				*philo;
 }						t_public;
 
 /*
-** macro
-*/
-
-# define INVALID_ARGC 1
-# define INVALID_RULE 2
-# define FAIL_MALLOC 3
-# define INVALID_EAT_NUM 4
-
-# define INVALID_PHILOS_NUM 200
-# define INVALID_TIME_SET 60
-
-# define UNDECIDED_NOE 0
-# define ARG_NUM_WITHOUT_NOE 5
-# define ARG_NUM_WITH_NOE 6
-
-/*
-** state & status[i]
-*/
-
-# define TYPE_INIT 0
-# define TYPE_EAT 1
-# define TYPE_SLEEP 2
-# define TYPE_THINK 3
-# define TYPE_DIED 4
-# define TYPE_DONE 5
-# define TYPE_EXIT 6
-# define TYPE_GRAB 7
-
-/*
-** hands
-*/
-
-# define HANDS_TYPE_EMPTY 0
-# define HANDS_TYPE_FULL 1
-
-# define TYPE_PRINT_VALID 1
-# define TYPE_PRINT_INVALID 2
-
-# define ANSI_COLOR_RED     "\x1b[31m"
-# define ANSI_COLOR_GREEN   "\x1b[32m"
-# define ANSI_COLOR_YELLOW  "\x1b[33m"
-# define ANSI_COLOR_BLUE    "\x1b[34m"
-# define ANSI_COLOR_MAGENTA "\x1b[35m"
-# define ANSI_COLOR_CYAN    "\x1b[36m"
-# define ANSI_COLOR_RESET   "\x1b[0m"
-
-/*
-**functions
+** functions.
 */
 
 int
@@ -133,7 +132,6 @@ uint64_t
 int
 	handle_thread(t_public *public);
 
-
 void
 	*philo_routine(void *arg);
 
@@ -160,10 +158,6 @@ void
 
 int
 	usleep_loop(int ms);
-
-/*
-** utils
-*/
 
 int
 	ft_atoi(const char *nptr);

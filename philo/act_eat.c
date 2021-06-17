@@ -13,7 +13,6 @@ static int
 	return (0);
 }
 
-
 static void
 	release_forks(t_public *public, t_philo *philo)
 {
@@ -22,24 +21,28 @@ static void
 	philo->hands = HANDS_TYPE_EMPTY;
 }
 
-
 int
 	act_eat(t_philo *philo)
 {
 	t_public	*public;
+	int			ret;
 
 	public = call_public();
-	if (grab_forks(public, philo))
-		return (1);
-	philo->eat_left--;
-	philo->eat_start = get_time();
-	if (pthread_create(&philo->watcher, NULL, &watch_died, (void *)philo))
-		return (1);
-	pthread_detach(philo->watcher);
-	if (display_message(philo, TYPE_EAT))
-		return (1);
-	usleep_loop(public->time_to_eat);
+	ret = grab_forks(public, philo);
+	if (!ret)
+	{
+		philo->eat_left--;
+		philo->eat_start = get_time();
+	}
+	if (!ret)
+		ret = pthread_create(&philo->watcher, NULL, &watch_died, (void *)philo);
+	if (!ret)
+		ret = pthread_detach(philo->watcher);
+	if (!ret)
+		ret = display_message(philo, TYPE_EAT);
+	if (!ret)
+		ret = usleep_loop(public->time_to_eat);
 	if (philo->hands == HANDS_TYPE_FULL)
 		release_forks(public, philo);
-	return (0);
+	return (!!ret);
 }

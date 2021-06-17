@@ -31,13 +31,14 @@ int
 	t_public	*public;
 
 	public = call_public();
-	destroy_all_mutexs(public);
+	if (public->forks)
+	{
+		destroy_all_mutexs(public);
+		free(public->forks);
+	}
 	if (public->status)
 		free(public->status);
-	if (public->forks)
-		free(public->forks);
 	if (public->philo)
 		free(public->philo);
 	return (1);
 }
-

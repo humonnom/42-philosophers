@@ -39,7 +39,6 @@ int
                     char **public_str,
                     int arg_num)
 {
-    public->errcode = 0;
     public->nop = ft_atoi(public_str[0]);
     public->time_to_die = (uint64_t)ft_atoi(public_str[1]);
     public->time_to_eat = (uint64_t)ft_atoi(public_str[2]);
@@ -48,12 +47,14 @@ int
         public->number_of_eat = ft_atoi(public_str[4]);
     else
         public->number_of_eat = UNDECIDED_NOE;
+    if (is_invalid_rule(public))
+        return (INVALID_RULE);
     public->start_time = get_time();
     public->state = TYPE_INIT;
     public->print_flag = TYPE_PRINT_VALID;
     if (set_forks_info(public))
-        return (1);
+        return (FAIL_MALLOC);
     if (init_mutexs(public))
-        return (1);
+        return (FAIL_MALLOC);
     return (0);
 }

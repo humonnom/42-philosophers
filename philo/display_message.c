@@ -67,17 +67,15 @@ int
 	t_public		*public;
 
 	public = call_public();
+	pthread_mutex_lock(&public->write_mutex);
 	ret = is_invalid_print(public, philo, type);
 	if (!ret)
-	{
-		pthread_mutex_lock(&public->write_mutex);
 		print_out_message(public, type,philo->id);
-		pthread_mutex_unlock(&public->write_mutex);
-	}
-	if (type == TYPE_DIED)
+	if (!ret && type == TYPE_DIED)
 	{
 		public->print_flag = TYPE_PRINT_INVALID;
 		ret = 1;
 	}
+	pthread_mutex_unlock(&public->write_mutex);
 	return (ret);
 }
