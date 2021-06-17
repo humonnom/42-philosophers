@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juepark <juepark@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/17 16:08:45 by juepark           #+#    #+#             */
+/*   Updated: 2021/06/17 18:08:26 by juepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static int	ft_isspace(char c)
@@ -33,7 +45,7 @@ int			ft_atoi(const char *nptr)
 	return ((int)ret);
 }
 
-int	ft_isdigit(int c)
+int			ft_isdigit(int c)
 {
 	return (c >= 48 && c <= 57);
 }

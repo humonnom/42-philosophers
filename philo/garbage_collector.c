@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   garbage_collector.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juepark <juepark@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/17 16:08:05 by juepark           #+#    #+#             */
+/*   Updated: 2021/06/17 18:15:35 by juepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void
@@ -26,7 +38,7 @@ static void
 }
 
 int
-	garbage_collector()
+	garbage_collector(void)
 {
 	t_public	*public;
 

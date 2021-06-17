@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_thread.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juepark <juepark@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/17 16:08:11 by juepark           #+#    #+#             */
+/*   Updated: 2021/06/17 18:37:42 by juepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static int
@@ -12,9 +24,8 @@ static int
 	while (!ret && i < public->nop)
 	{
 		arg = &(public->philo[i]);
-		ret = pthread_create(&public->philo[i].thread_id, NULL, &philo_routine, arg);
-		if (!ret && i == 0)
-			usleep(100);
+		ret =\
+		pthread_create(&public->philo[i].thread_id, NULL, &philo_routine, arg);
 		i += 2;
 	}
 	return (ret);
@@ -40,10 +51,11 @@ int
 		ret = handle_one_philo(public);
 	if (!ret)
 		ret = create_thread_group(public, 0);
+	usleep(100);
 	if (!ret)
 		ret = create_thread_group(public, 1);
 	i = -1;
 	while (!ret && ++i < public->nop)
-	 	ret = pthread_join(public->philo[i].thread_id, (void **)&status);
+		ret = pthread_join(public->philo[i].thread_id, (void **)&status);
 	return (ret);
 }

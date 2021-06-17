@@ -1,20 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display_message.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: juepark <juepark@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/17 16:08:01 by juepark           #+#    #+#             */
+/*   Updated: 2021/06/17 18:38:29 by juepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static char
 	*get_type_message(int type)
 {
-
 	if (type == TYPE_EAT)
-		return("is eating\n");
+		return ("is eating\n");
 	if (type == TYPE_SLEEP)
-		return("is sleeping\n");
+		return ("is sleeping\n");
 	if (type == TYPE_THINK)
-		return("is thinking\n");
+		return ("is thinking\n");
 	if (type == TYPE_GRAB)
-		return("has taken a fork\n");
+		return ("has taken a fork\n");
 	if (type == TYPE_DIED)
-		return("is died\n");
-	return("UNDEFINED MESSAGE...\n");
+		return ("is died\n");
+	return ("UNDEFINED MESSAGE...\n");
 }
 
 static int
@@ -64,13 +75,13 @@ int
 	display_message(t_philo *philo, int type)
 {
 	int			ret;
-	t_public		*public;
+	t_public	*public;
 
 	public = call_public();
 	pthread_mutex_lock(&public->write_mutex);
 	ret = is_invalid_print(public, philo, type);
 	if (!ret)
-		print_out_message(public, type,philo->id);
+		print_out_message(public, type, philo->id);
 	if (!ret && type == TYPE_DIED)
 	{
 		public->print_flag = TYPE_PRINT_INVALID;

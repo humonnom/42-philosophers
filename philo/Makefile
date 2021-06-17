@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: juepark <juepark@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/06/17 16:08:19 by juepark           #+#    #+#              #
+#    Updated: 2021/06/17 16:10:43 by juepark          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		=	philo
 
 CC			=	gcc
@@ -66,5 +78,9 @@ noe:		re
 			@./$(NAME) 5 800 200 200 7
 			# "no one should die"
 
-.PHONY:		all clean fclean re test test2 test3 test4 test5 noe
-#./philo 3 4100 2000 2000
+die:		re
+			@./$(NAME) 3 4100 2000 2000
+			# "check if philo die right time"
+
+.PHONY:		all clean fclean re test test2 test3 test4 test5 noe die
+

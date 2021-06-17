@@ -6,7 +6,7 @@
 /*   By: juepark <juepark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 16:53:17 by juepark           #+#    #+#             */
-/*   Updated: 2021/06/17 14:52:31 by juepark          ###   ########.fr       */
+/*   Updated: 2021/06/17 18:43:17 by juepark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,64 +105,45 @@ typedef struct			s_public
 ** functions.
 */
 
-int
-	gen_philos(t_public *public);
+int						gen_philos(t_public *public);
 
-t_public
-	*call_public(void);
+t_public				*call_public(void);
 
-int
-	set_public(
-				t_public *public,
-				char **public_str,
-				int arg_num);
+int						set_public(
+						t_public *public,
+						char **public_str,
+						int arg_num);
 
-int
-	is_invalid_rule(t_public *public);
+int						is_invalid_rule(t_public *public);
 
-int
-	is_invalid_argc(int argc);
+int						is_invalid_argc(int argc);
 
-int
-	garbage_collector(void);
+int						garbage_collector(void);
 
-uint64_t
-	get_time(void);
+uint64_t				get_time(void);
 
-int
-	handle_thread(t_public *public);
+int						handle_thread(t_public *public);
 
-void
-	*philo_routine(void *arg);
+void					*philo_routine(void *arg);
 
-int
-	act_eat(t_philo *philo);
+int						act_eat(t_philo *philo);
 
-int
-	act_sleep(t_philo *philo);
+int						act_sleep(t_philo *philo);
 
-int
-	act_think(t_philo *philo);
+int						act_think(t_philo *philo);
 
-void
-	display_err_message(int err_number);
+void					display_err_message(int err_number);
 
-int
-	display_message(t_philo *philo, int type);
+int						display_message(t_philo *philo, int type);
 
-int
-	watch_done(t_philo *philo);
+int						watch_done(t_philo *philo);
 
-void
-	*watch_died(void *arg);
+void					*watch_died(void *arg);
 
-int
-	usleep_loop(int ms);
+int						usleep_loop(int ms);
 
-int
-	ft_atoi(const char *nptr);
+int						ft_atoi(const char *nptr);
 
-int
-	ft_isdigit(int c);
+int						ft_isdigit(int c);
 
 #endif
