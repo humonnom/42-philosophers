@@ -6,7 +6,7 @@
 #    By: juepark <juepark@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/17 16:08:19 by juepark           #+#    #+#              #
-#    Updated: 2021/06/17 16:10:43 by juepark          ###   ########.fr        #
+#    Updated: 2021/06/18 12:51:02 by juepark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,11 +40,13 @@ OBJDIR		= ./objs
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
+			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -lpthread
+			@echo "\nStart program"
 
 $(OBJDIR)/%.o:%.c
+			@printf "Generating philosopher's table... %-33.33s\r" $@
 			@mkdir $(OBJDIR) 2> /dev/null || true
-			$(CC) $(CFLAGS) -I./philo.h -o $@ -c $<
+			@$(CC) $(CFLAGS) -I./philo.h -o $@ -c $<
 
 clean:
 			@rm -rf $(OBJDIR) 2> /dev/null || true
@@ -54,33 +56,36 @@ fclean:		clean
 
 re:			fclean all
 
-test:		re
+norm:
+			@norminette *.c
+			@norminette *.h
+
+test0:		re
 			@./$(NAME) 4 410 200 200
 			# "no one should die"
 
+test1:		re
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
+
 test2:		re
-			@./$(NAME) 4 310 200 100
-			# "a philosopher should die"
+			@./$(NAME) 5 800 200 200
+			# "no one should die"
 
 test3:		re
-			@./$(NAME) 5 800 200 200
-			# "no one should die"
-
-test4:		re
-			@./$(NAME) 1 800 200 200
-			# "a philosopher should die"
-
-test5:		re
-			@./$(NAME) 5 800 200 200
-			# "no one should die"
-
-noe:		re
 			@./$(NAME) 5 800 200 200 7
 			# "no one should die"
 
-die:		re
+test4:		re
+			@./$(NAME) 4 310 200 100
+			# "a philosopher should die"
+
+test5:		re
+			@./$(NAME) 1 800 200 200
+			# "a philosopher should die"
+
+test6:	re
 			@./$(NAME) 3 4100 2000 2000
 			# "check if philo die right time"
 
-.PHONY:		all clean fclean re test test2 test3 test4 test5 noe die
-
+.PHONY:		all clean fclean re norm test0 test1 test2 test3 test4 test5 test6

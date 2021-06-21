@@ -6,7 +6,7 @@
 /*   By: juepark <juepark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/17 16:08:11 by juepark           #+#    #+#             */
-/*   Updated: 2021/06/17 18:37:42 by juepark          ###   ########.fr       */
+/*   Updated: 2021/06/18 12:51:25 by juepark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ int
 	int		ret;
 	int		status;
 
-	ret = 0;
 	if (public->nop == 1)
-		ret = handle_one_philo(public);
+		return (handle_one_philo(public));
+	ret = create_thread_group(public, 0);
 	if (!ret)
-		ret = create_thread_group(public, 0);
-	usleep(100);
-	if (!ret)
+	{
+		usleep(100);
 		ret = create_thread_group(public, 1);
+	}
 	i = -1;
 	while (!ret && ++i < public->nop)
 		ret = pthread_join(public->philo[i].thread_id, (void **)&status);
